@@ -8,3 +8,16 @@ body {
     height: 100%;
     width: 100%;
 }
+
+.titulo {
+    position: absolute;
+    top: 5px;
+    left: 30%;
+    width: auto;
+    z-index: 1000;
+    background-color: rgba(255,255,255,0.7);
+    padding: 10px;
+    font-size: 21px;
+    color: #333333;
+    border-radius: 5px;
+}
