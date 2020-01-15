@@ -1,0 +1,58 @@
+<html>
+    <head>
+    <meta charset='utf-8' />
+    <title>Terremotos</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.css' rel='stylesheet' />
+    <link href='css/estilobase.css' rel='stylesheet' /> <!--Hemos llamado al estilo que habíamos creado para el buscador de farmacias-->
+    <script src='js/utils.js'></script> <!--libreria propia que vamos a generar-->
+    <script src='js/terremotos.js'></script> <!--herramienta de terremotos que vamos a utilizar-->
+    
+    <script>
+        var map;
+        function init() {
+ 
+            mapboxgl.accessToken = "";
+            map = new mapboxgl.Map({
+                container: 'map',
+                style: 'https://geoserveis.icgc.cat/contextmaps/positron.json', //ponemos el estilo de ICGC
+                center: [9.746, 40.473],
+                zoom: 5.5,
+                hash: true,
+                pitch: 0,
+                attributionControl: false
+            });
+            map.addControl(new mapboxgl.AttributionControl({
+                compact: true
+            }));
+            map.addControl(new mapboxgl.NavigationControl());           
+ 
+            map.on("load", function () {
+
+                generarPeticionTerremotos();
+                addPopupToMap("terremotos"); //lamamos a la funció popup de util en la capa terremoto
+
+                }); // fin load mapa
+
+                map.on("zoomend", function () {
+
+                generarPeticionTerremotos();
+                });
+
+                map.on("moveend", function () {
+
+                generarPeticionTerremotos();
+                });
+
+
+        } //fin init
+ 
+    </script>
+    </head>
+ 
+    <body onload="init()">
+        <div id='map'></div>
+    </body>
+ 
+    </html>
