@@ -36,6 +36,28 @@
             }));
             map.addControl(new mapboxgl.NavigationControl());
 
+            //Igual que con el source de MapBOX pero buscando el archivo en local (no lo busca en el GITHUB hasta que no lo suba)
+            //Un GeoJSON para un layer, el estilo se controla via codigo (ver web MapBOX - Style Especification)
+            map.on('load', function () {
+                map.addSource("carrils-bici", {
+                    type: "geojson",
+                    data: "datos/carrils-bici.geojson"//puedo cambiar esta ruta por una url
+                }); //fin map source
+
+                map.addLayer({
+                    id: "carrils-bici-layer",
+                    type: "line",
+                    source: "carrils-bici",
+                    layout: {
+                        "line-join": "round",
+                        "line-cap": "round"
+                    },
+                    paint: {
+                        "line-color": "#FF0000",
+                        "line-width": 8
+                    }
+                }); //fin add layers
+            }); //Fin load mapa
 
         }
     </script>
