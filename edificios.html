@@ -1,0 +1,60 @@
+<html>
+    <head>
+    <meta charset='utf-8' />
+    <title>Edificios</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.css' rel='stylesheet' />
+    <link href='css/estilobase.css' rel='stylesheet' />
+    <script src='js/utils.js'></script>
+    <script src='js/edificios.js'>//función que hemos creado para definir los estilos de los edificios</script>
+    <script>
+        //Añadir vuestor token y/o estilo !!
+        var map;
+        function init() {
+            mapboxgl.accessToken =
+                'pk.eyJ1Ijoiam9yZ2VyZDIiLCJhIjoiY2s0Ymd6bDEwMGRzcjNzbzI2eDJvcGR2ZSJ9.kPxBCofueadQD7nmPihe5A';
+             map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/dark-v10',//este estilo de mapbox lo podemos cambiar por cualquier estilo de mapa del ICGC (o cualquier otro...)
+                center: [2.16859, 41.3954],
+                zoom: 15,
+                attributionControl: false,
+                pitch: 45,
+                hash: true
+            });
+ 
+            map.addControl(new mapboxgl.AttributionControl({ compact: true }));
+            map.addControl(new mapboxgl.NavigationControl());
+
+            map.on('load', function () {//Llamamos a la función del archivo utils.js para generar un popup
+
+                addEdificiosCapa();
+
+                addPopupToMapEdificios("edificios")//Llamamos a la nueva función que hemos generado en edificios.js para personalizarla
+
+                //addPopupToMap("edificios");
+                }); //fin onload
+ 
+        } // final init
+    </script>
+    </head>
+ 
+    <body onload="init()">
+        <div class="titulo">Edificios Barcelona</div>
+        <!--Añadimos este div para generar un filtro por edificios-->
+        <div class="panelTopIzquierda">
+                <!--Añadimos un checkbox con un onChange que llama a la función de edificios.js-->
+                <input onChange="activarEdificios (this.checked)" type="checkbox" checked> Edificios
+            <h5>Altura edificios</h5>
+            <label id="altura">Altura superior a 0 m</label>
+            
+            <!--Le añadimos en JavaScrip en HTML para llamar a la función-->
+            <input  onChange="filtrarEdificios(this.value)" id="slider" type="range" min="1" max="110" step="5" value="0" />
+            <!--<input id="slider" type="range" min="1" max="110" step="5" value="0" /> Comentamos el input inicial-->
+        
+        </div>
+        <div id="map"></div>
+    </body>
+ 
+    </html>
