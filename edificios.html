@@ -5,6 +5,10 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.css' rel='stylesheet' />
+<!--Añadimos el geocodificador de la API de MapBox-->
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css" type="text/css"/>
+
     <link href='css/estilobase.css' rel='stylesheet' />
     <script src='js/utils.js'></script>
     <script src='js/edificios.js'>//función que hemos creado para definir los estilos de los edificios</script>
@@ -26,6 +30,13 @@
  
             map.addControl(new mapboxgl.AttributionControl({ compact: true }));
             map.addControl(new mapboxgl.NavigationControl());
+
+            //Añadimos el control del geocodificador con nuestro token
+            map.addControl(
+                new MapboxGeocoder({
+                accessToken: mapboxgl.accessToken,
+                mapboxgl: mapboxgl
+                }));
 
             map.on('load', function () {//Llamamos a la función del archivo utils.js para generar un popup
 
